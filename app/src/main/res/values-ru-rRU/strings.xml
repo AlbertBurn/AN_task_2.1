@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="description_post_author_avatar">Аватор автора поста</string>
+    <string name="description_post_menu">Меню поста</string>
+    <string name="description_post_like">лайк</string>
+    <string name="description_post_share">поделиться постом</string>
+    <string name="description_post_views">просмотры поста</string>
+</resources>

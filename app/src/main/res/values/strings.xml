@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="description_post_author_avatar">Post author avatar</string>
+    <string name="description_post_menu">Post menu</string>
+    <string name="description_post_like">like</string>
+    <string name="description_post_share">share post</string>
+    <string name="description_post_views">post views</string>
+
+</resources>
