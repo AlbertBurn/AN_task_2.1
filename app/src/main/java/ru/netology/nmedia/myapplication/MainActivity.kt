@@ -60,6 +60,21 @@ class MainActivity : AppCompatActivity() {
                 //shareCount.text = post.shares.toString()
                 shareCount.text = changeNumber(post.shares)
             }
+
+            avatar.setOnClickListener {
+                Log.d("Binding click", "Avatar")
+            }
+
+            binding.root.setOnClickListener {
+                Log.d("Binding click", "binding.root")
+
+            }
+
+            binding.like.setOnClickListener {
+                Log.d("Binding click", "binding.like")
+
+            }
+
         }
     }
 
