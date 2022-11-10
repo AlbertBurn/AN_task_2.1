@@ -9,18 +9,15 @@ import ru.netology.nmedia.myapplication.dto.Post
 
 class PostViewHolder(
     private val binding: CardPostBinding,
-    private val onLikeListener: OnLikeListener
+    private val onInteractionListener: OnInteractionListener
 ) : RecyclerView.ViewHolder(binding.root) {
 
     private lateinit var currentPost: Post
 
-    init {
-        binding.like.setOnClickListener(::onLikeClick)
-    }
+//    init {
+//        binding.like.setOnClickListener(::onInteractionListener)
+//    }
 
-    private fun onLikeClick(v: View){
-        onLikeListener(currentPost)
-    }
     fun bind(post: Post) {
         currentPost = post
         binding.apply {
@@ -32,6 +29,14 @@ class PostViewHolder(
             like.setImageResource(
                 if (post.likedByMe) R.drawable.ic_liked_24 else R.drawable.ic_like_24
             )
+
+            like.setOnClickListener {
+                onInteractionListener.onLike(post)
+            }
+
+            share.setOnClickListener {
+                onInteractionListener.onShare(post)
+            }
         }
     }
 

@@ -8,9 +8,16 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.myapplication.databinding.CardPostBinding
 import ru.netology.nmedia.myapplication.dto.Post
 
-typealias OnLikeListener = (post: Post) -> Unit
+//typealias OnLikeListener = (post: Post) -> Unit
 
-class PostsAdapter( private val onLikeListener: OnLikeListener): ListAdapter<Post, PostViewHolder>(PostDiffCallBack()) {
+interface OnInteractionListener {
+    fun onLike(post: Post) {}
+    fun onShare(post: Post) {}
+}
+
+class PostsAdapter( private val onInteractionListener: OnInteractionListener)
+    : ListAdapter<Post, PostViewHolder>(PostDiffCallBack()) {
+
     var list = emptyList<Post>()
         set(value) {
             field = value
@@ -19,7 +26,7 @@ class PostsAdapter( private val onLikeListener: OnLikeListener): ListAdapter<Pos
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PostViewHolder(binding, onLikeListener)
+        return PostViewHolder(binding, onInteractionListener)
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
