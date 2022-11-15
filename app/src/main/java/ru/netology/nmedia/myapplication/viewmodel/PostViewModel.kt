@@ -1,36 +1,45 @@
 package ru.netology.nmedia.myapplication.viewmodel
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import ru.netology.nmedia.myapplication.dto.Post
 import ru.netology.nmedia.myapplication.repository.PostRepository
 import ru.netology.nmedia.myapplication.repository.PostRepositoryInMemoryImpl
+
+private val empty = Post(
+    id = 0,
+    content = "",
+    author = "",
+    likedByMe = false,
+    likes = 0,
+    published = ""
+)
 
 class PostViewModel: ViewModel() {
     private val repository: PostRepository = PostRepositoryInMemoryImpl()
     val data = repository.getAll()
+    val edited = MutableLiveData(empty)
+
     fun likeById(id: Long) = repository.likeById(id)
     fun shareById(id: Long) = repository.shareById(id)
 
-//    //This function change number for format of app
-//    fun changeNumber(count: Int): String {
-//        val numberFirstToStr: Int
-//        val numberSecondToStr: Int
-//        if ((count >= 1_000) && (count < 10_000)) {
-//            numberFirstToStr = count / 1_000
-//            numberSecondToStr = ((count % 1_000) / 100)
-//            if (numberSecondToStr == 0) {
-//                return "$numberFirstToStr" + "K"
-//            } else return "$numberFirstToStr.$numberSecondToStr" + "K"
-//        } else if ((count >= 10_000) && (count < 1_000_000)) {
-//            numberFirstToStr = count / 1_000
-//            return "$numberFirstToStr" + "K"
-//        } else if (count >= 1_000_000) {
-//            numberFirstToStr = count / 1_000_000
-//            numberSecondToStr = ((count % 1_000_000) / 100_000)
-//            if (numberSecondToStr == 0) {
-//                return "$numberFirstToStr" + "M"
-//            } else return "$numberFirstToStr.$numberSecondToStr" + "M"
-//        } else {
-//            return "$count"
-//        }
-//    }
+    fun save() {
+        edited.value?.let {
+            repository.save(it)
+        }
+        edited.value = empty
+    }
+    fun edit(post: Post) {
+        edited.value = post
+    }
+
+    fun changeContent(content: String) {
+        val text = content.trim()
+        if (edited.value?.content == text) {
+            return
+        }
+        edited.value = edited.value?.copy(content = text)
+    }
+
+    fun deleteById(id: Long) = repository.deleteById(id)
 }

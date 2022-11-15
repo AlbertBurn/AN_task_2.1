@@ -13,16 +13,16 @@ import ru.netology.nmedia.myapplication.dto.Post
 interface OnInteractionListener {
     fun onLike(post: Post) {}
     fun onShare(post: Post) {}
+//    fun onMenu(post: Post) {}
+//    fun onSaveListener(post: Post) {}
+//    fun onReadListener(post: Post) {}
+    fun onEdit(post: Post) {}
+    fun onDelete(post: Post) {}
 }
 
 class PostsAdapter( private val onInteractionListener: OnInteractionListener)
     : ListAdapter<Post, PostViewHolder>(PostDiffCallBack()) {
 
-    var list = emptyList<Post>()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -30,11 +30,11 @@ class PostsAdapter( private val onInteractionListener: OnInteractionListener)
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-        val post = list[position]
+        val post = getItem(position)
         holder.bind(post)
     }
 
-    override fun getItemCount(): Int = list.size
+//    override fun getItemCount(): Int = currentList.size
 }
 
 class PostDiffCallBack : DiffUtil.ItemCallback<Post>(){

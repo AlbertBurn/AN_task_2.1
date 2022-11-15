@@ -1,6 +1,7 @@
 package ru.netology.nmedia.myapplication.adapter
 
 import android.view.View
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.myapplication.R
 import ru.netology.nmedia.myapplication.databinding.CardPostBinding
@@ -13,10 +14,6 @@ class PostViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     private lateinit var currentPost: Post
-
-//    init {
-//        binding.like.setOnClickListener(::onInteractionListener)
-//    }
 
     fun bind(post: Post) {
         currentPost = post
@@ -37,8 +34,29 @@ class PostViewHolder(
             share.setOnClickListener {
                 onInteractionListener.onShare(post)
             }
+
+            menu.setOnClickListener{
+                PopupMenu(it.context, it).apply {
+                    inflate(R.menu.options_post)
+                    setOnMenuItemClickListener { item ->
+                        when (item.itemId) {
+                            R.id.remove -> {
+                                onInteractionListener.onDelete(post)
+                                true
+                            }
+                            R.id.edit -> {
+                                onInteractionListener.onEdit(post)
+                                true
+                            }
+
+                            else -> false
+                        }
+                    }
+                }.show()
+            }
         }
     }
+
 
     //This function change number for format of app
     fun changeNumber(count: Int): String {

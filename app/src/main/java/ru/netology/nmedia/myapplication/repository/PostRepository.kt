@@ -7,4 +7,10 @@ interface PostRepository {
     fun getAll(): LiveData<List<Post>>
     fun likeById(id: Long)
     fun shareById(id: Long)
+
+//    fun menuById(id: Long)
+    fun save(post: Post)
+    //fun readById(id: Long)
+//    fun edit(post: Post)
+    fun deleteById(id: Long)
 }
