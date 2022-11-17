@@ -1,6 +1,5 @@
 package ru.netology.nmedia.myapplication.adapter
 
-import android.view.View
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.myapplication.R
@@ -21,11 +20,13 @@ class PostViewHolder(
             author.text = post.author
             published.text = post.published
             content.text = post.content
-            likeCount.text = changeNumber(post.likes)
-            shareCount.text = changeNumber(post.shares)
-            like.setImageResource(
-                if (post.likedByMe) R.drawable.ic_liked_24 else R.drawable.ic_like_24
-            )
+            //likeCount.text = changeNumber(post.likes)
+            like.isChecked = post.likedByMe
+            like.text = changeNumber(post.likes)
+            share.text = changeNumber(post.shares)
+//            like.setImageResource(
+//                if (post.likedByMe) R.drawable.ic_liked_24 else R.drawable.ic_like_24dp
+//            )
 
             like.setOnClickListener {
                 onInteractionListener.onLike(post)

@@ -34,7 +34,7 @@ class PostsAdapter( private val onInteractionListener: OnInteractionListener)
         holder.bind(post)
     }
 
-//    override fun getItemCount(): Int = currentList.size
+    override fun getItemCount(): Int = currentList.size
 }
 
 class PostDiffCallBack : DiffUtil.ItemCallback<Post>(){
