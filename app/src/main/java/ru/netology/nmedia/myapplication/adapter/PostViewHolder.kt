@@ -2,6 +2,7 @@ package ru.netology.nmedia.myapplication.adapter
 
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 import ru.netology.nmedia.myapplication.R
 import ru.netology.nmedia.myapplication.databinding.CardPostBinding
 import ru.netology.nmedia.myapplication.dto.Post

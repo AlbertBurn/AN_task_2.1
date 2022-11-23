@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.myapplication.databinding.CardPostBinding
 import ru.netology.nmedia.myapplication.dto.Post
+import ru.netology.nmedia.myapplication.viewmodel.PostViewModel
 
 //typealias OnLikeListener = (post: Post) -> Unit
 
@@ -45,5 +46,4 @@ class PostDiffCallBack : DiffUtil.ItemCallback<Post>(){
     override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean {
         return oldItem == newItem
     }
-
 }

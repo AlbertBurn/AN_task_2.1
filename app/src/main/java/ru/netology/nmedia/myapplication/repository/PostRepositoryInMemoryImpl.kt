@@ -1,12 +1,7 @@
 package ru.netology.nmedia.myapplication.repository
 
-import android.util.Log
-import android.widget.PopupMenu
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import ru.netology.nmedia.myapplication.MainActivity
-import ru.netology.nmedia.myapplication.R
-import ru.netology.nmedia.myapplication.databinding.ActivityMainBinding
 import ru.netology.nmedia.myapplication.dto.Post
 
 class PostRepositoryInMemoryImpl : PostRepository {
