@@ -126,6 +126,7 @@ class PostRepositoryInMemoryImpl : PostRepository {
                 post.copy(
                     id = nextId++,
                     author = "Me",
+                    content = post.content,
                     likedByMe = false,
                     published = "now"
                 )

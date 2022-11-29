@@ -19,6 +19,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val viewModel: PostViewModel by viewModels()
+
+        //функция вызываемая по завершении активити редактирования
+        val editPostLauncher = registerForActivityResult(EditPostResultContract()) { result ->
+            result ?: return@registerForActivityResult
+            viewModel.changeContent(result)
+            viewModel.save()
+        }
+
         val adapter = PostsAdapter(object : OnInteractionListener {
             override fun onLike(post: Post) {
                 viewModel.likeById(post.id)
@@ -43,6 +51,8 @@ class MainActivity : AppCompatActivity() {
 
             override fun onEdit(post: Post) {
                 viewModel.edit(post)
+
+                editPostLauncher.launch(post.content)
             }
         })
         binding.list.adapter = adapter
@@ -51,11 +61,17 @@ class MainActivity : AppCompatActivity() {
             adapter.submitList(posts)
         }
 
-
+        //функция вызываемая по завершении активити создания нового поста
         val newPostLauncher = registerForActivityResult(NewPostResultContract()) { result ->
             result ?: return@registerForActivityResult
             viewModel.changeContent(result)
             viewModel.save()
+        }
+
+        viewModel.edited.observe(this) {post ->
+            if (post.id == 0L) {
+                return@observe
+            }
         }
 
         binding.fab.setOnClickListener {
