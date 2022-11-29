@@ -20,13 +20,6 @@ class MainActivity : AppCompatActivity() {
 
         val viewModel: PostViewModel by viewModels()
 
-        //функция вызываемая по завершении активити редактирования
-        val editPostLauncher = registerForActivityResult(EditPostResultContract()) { result ->
-            result ?: return@registerForActivityResult
-            viewModel.changeContent(result)
-            viewModel.save()
-        }
-
         val adapter = PostsAdapter(object : OnInteractionListener {
             override fun onLike(post: Post) {
                 viewModel.likeById(post.id)
@@ -49,9 +42,15 @@ class MainActivity : AppCompatActivity() {
                 viewModel.deleteById(post.id)
             }
 
+            //функция вызываемая по завершении активити редактирования
+            val editPostLauncher = registerForActivityResult(EditPostResultContract()) { result ->
+                result ?: return@registerForActivityResult
+                viewModel.changeContent(result)
+                viewModel.save()
+            }
+
             override fun onEdit(post: Post) {
                 viewModel.edit(post)
-
                 editPostLauncher.launch(post.content)
             }
         })

@@ -23,6 +23,7 @@ class EditPostActivity : AppCompatActivity() {
 
         binding.saveEdit.setOnClickListener{
             val intent = Intent()
+
             if (binding.editText.text.isNullOrBlank()) {
                 Toast.makeText(
                     this,
@@ -32,7 +33,7 @@ class EditPostActivity : AppCompatActivity() {
                 setResult(Activity.RESULT_CANCELED, intent)
             } else {
                 val content = binding.editText.text.toString()
-                intent.putExtra("post text output", content)
+                intent.putExtra("post text input", content)
                 setResult(Activity.RESULT_OK, intent)
             }
 
