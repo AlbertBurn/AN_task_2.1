@@ -16,7 +16,7 @@ class PostRepositoryInMemoryImpl : PostRepository {
             published = "23 сентября в 10:12",
             likedByMe = false,
             likes = likesDefault,
-            shares = sharesDefault
+            shares = sharesDefault,
         ),
         Post(
             id = nextId++,
@@ -90,6 +90,16 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likes = likesDefault,
             shares = sharesDefault
         ),
+        Post(
+            id = nextId++,
+            author = "Нетология. Университет интернет-профессий будущего",
+            content = "Видео должно быть тут",
+            published = "23 сентября в 10:12",
+            likedByMe = false,
+            likes = likesDefault,
+            shares = sharesDefault,
+            videoUrl = "https://www.youtube.com/watch?v=WhWc3b3KhnY"
+        )
     )
 
     private val data = MutableLiveData(posts)

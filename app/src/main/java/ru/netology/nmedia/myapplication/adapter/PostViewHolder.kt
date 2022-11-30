@@ -1,8 +1,9 @@
 package ru.netology.nmedia.myapplication.adapter
 
+import android.net.Uri
+import android.view.View
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.SimpleItemAnimator
 import ru.netology.nmedia.myapplication.R
 import ru.netology.nmedia.myapplication.databinding.CardPostBinding
 import ru.netology.nmedia.myapplication.dto.Post
@@ -28,6 +29,37 @@ class PostViewHolder(
 //            like.setImageResource(
 //                if (post.likedByMe) R.drawable.ic_liked_24 else R.drawable.ic_like_24dp
 //            )
+
+            if (post.videoUrl != null) {
+                videoLayout.visibility = View.VISIBLE
+                    videoView.apply {
+                        setVideoURI(Uri.parse(post.videoUrl))
+                        requestFocus()
+                        start()
+                    }
+            } else {
+                videoLayout.visibility = View.GONE
+            }
+
+            videoLayout.setOnClickListener {
+                onInteractionListener.onPlayVideo(post)
+            }
+
+//            videoButton.setOnClickListener {
+//                videoView.apply {
+//                    setVideoURI(Uri.parse(post.videoUrl))
+//                    requestFocus()
+//                    start()
+//                }
+//            }
+//
+//            videoView.setOnClickListener {
+//                videoView.apply {
+//                    setVideoURI(Uri.parse(post.videoUrl))
+//                    requestFocus()
+//                    start()
+//                }
+//            }
 
             like.setOnClickListener {
                 onInteractionListener.onLike(post)
