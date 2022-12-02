@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import ru.netology.nmedia.myapplication.R
 import ru.netology.nmedia.myapplication.databinding.ActivityEditPostBinding
 
-
 class EditPostActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,7 +16,7 @@ class EditPostActivity : AppCompatActivity() {
 
         with(binding.editText) {
             requestFocus()
-            val text = intent.getStringExtra("post text input")
+            val text = intent.getStringExtra(POST_TEXT)
             setText(text)
         }
 
@@ -33,7 +32,7 @@ class EditPostActivity : AppCompatActivity() {
                 setResult(Activity.RESULT_CANCELED, intent)
             } else {
                 val content = binding.editText.text.toString()
-                intent.putExtra("post text input", content)
+                intent.putExtra(POST_TEXT, content)
                 setResult(Activity.RESULT_OK, intent)
             }
 

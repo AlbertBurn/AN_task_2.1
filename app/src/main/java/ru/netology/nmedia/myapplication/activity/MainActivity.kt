@@ -21,6 +21,20 @@ class MainActivity : AppCompatActivity() {
 
         val viewModel: PostViewModel by viewModels()
 
+        //функция вызываемая по завершении активити редактирования
+        val editPostLauncher = registerForActivityResult(EditPostResultContract()) { result ->
+            result ?: return@registerForActivityResult
+            viewModel.changeContent(result)
+            viewModel.save()
+        }
+
+        //функция вызываемая по завершении активити создания нового поста
+        val newPostLauncher = registerForActivityResult(NewPostResultContract()) { result ->
+            result ?: return@registerForActivityResult
+            viewModel.changeContent(result)
+            viewModel.save()
+        }
+
         val adapter = PostsAdapter(object : OnInteractionListener {
             override fun onLike(post: Post) {
                 viewModel.likeById(post.id)
@@ -43,13 +57,6 @@ class MainActivity : AppCompatActivity() {
                 viewModel.deleteById(post.id)
             }
 
-            //функция вызываемая по завершении активити редактирования
-            val editPostLauncher = registerForActivityResult(EditPostResultContract()) { result ->
-                result ?: return@registerForActivityResult
-                viewModel.changeContent(result)
-                viewModel.save()
-            }
-
             override fun onEdit(post: Post) {
                 viewModel.edit(post)
                 editPostLauncher.launch(post.content)
@@ -64,13 +71,6 @@ class MainActivity : AppCompatActivity() {
         binding.list.itemAnimator = null // эта вставка должна помочь с  проблемой мерцания
         viewModel.data.observe(this) { posts ->
             adapter.submitList(posts)
-        }
-
-        //функция вызываемая по завершении активити создания нового поста
-        val newPostLauncher = registerForActivityResult(NewPostResultContract()) { result ->
-            result ?: return@registerForActivityResult
-            viewModel.changeContent(result)
-            viewModel.save()
         }
 
         viewModel.edited.observe(this) {post ->
