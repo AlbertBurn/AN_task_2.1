@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.NewPostActivity">
+    tools:context=".activity.EditPostFragment">
 
     <EditText
-        android:id="@+id/edit"
+        android:id="@+id/editText"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="start|top"
         android:inputType="textMultiLine"
+        android:padding="@dimen/margin_default"
         android:background="@android:color/transparent"
         />
 
@@ -25,11 +26,21 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/ok"
+        style="@style/Widget.AppCompat.FloatingButtons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/description_post_save"
-        app:srcCompat="@drawable/ic_ok_24dp"
         app:layout_anchor="@id/bottomAppBar"
-        />
+        app:layout_anchorGravity="left"
+        app:srcCompat="@drawable/ic_baseline_done_24" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/cancel_button"
+        style="@style/Widget.AppCompat.FloatingButtons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/bottomAppBar"
+        app:fabSize="mini"
+        app:layout_anchorGravity="end"
+        app:srcCompat="@drawable/ic_baseline_clear_24" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -29,4 +29,8 @@
         <item name="android:textColor">@color/icon_button_tint</item>
     </style>
 
+    <style name="Widget.AppCompat.FloatingButtons" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="buttonTint">@color/colorAccent</item>
+    </style>
+
 </resources>
