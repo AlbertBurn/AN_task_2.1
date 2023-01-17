@@ -34,6 +34,12 @@ class FeedFragment : Fragment() {
         )
 
         val adapter = PostsAdapter(object : OnInteractionListener {
+
+            override fun onPostClick(post: Post) {
+                findNavController().navigate(R.id.action_feedFragment_to_PostFragment)
+                //TODO: необходимо доделать механизм нажатия на пост и проверить.
+            }
+
             override fun onEdit(post: Post) {
                 viewModel.edit(post)
                 val text = post.content

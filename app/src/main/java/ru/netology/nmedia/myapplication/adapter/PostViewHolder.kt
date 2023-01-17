@@ -26,12 +26,13 @@ class PostViewHolder(
             like.isChecked = post.likedByMe
             like.text = changeNumber(post.likes)
             share.text = changeNumber(post.shares)
+
 //            like.setImageResource(
 //                if (post.likedByMe) R.drawable.ic_liked_24 else R.drawable.ic_like_24dp
 //            )
 
             if (post.videoUrl != null) {
-                videoLayout.visibility = View.VISIBLE
+                this.videoLayout.visibility = View.VISIBLE
                     videoView.apply {
                         setVideoURI(Uri.parse(post.videoUrl))
                         requestFocus()
@@ -41,25 +42,13 @@ class PostViewHolder(
                 videoLayout.visibility = View.GONE
             }
 
+            cardPost.setOnClickListener {
+                onInteractionListener.onPostClick(post)
+            }
+
             videoLayout.setOnClickListener {
                 onInteractionListener.onPlayVideo(post)
             }
-
-//            videoButton.setOnClickListener {
-//                videoView.apply {
-//                    setVideoURI(Uri.parse(post.videoUrl))
-//                    requestFocus()
-//                    start()
-//                }
-//            }
-//
-//            videoView.setOnClickListener {
-//                videoView.apply {
-//                    setVideoURI(Uri.parse(post.videoUrl))
-//                    requestFocus()
-//                    start()
-//                }
-//            }
 
             like.setOnClickListener {
                 onInteractionListener.onLike(post)
