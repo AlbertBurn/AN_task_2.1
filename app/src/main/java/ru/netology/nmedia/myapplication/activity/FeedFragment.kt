@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ru.netology.nmedia.myapplication.R
@@ -14,10 +15,11 @@ import ru.netology.nmedia.myapplication.adapter.OnInteractionListener
 import ru.netology.nmedia.myapplication.adapter.PostsAdapter
 import ru.netology.nmedia.myapplication.databinding.FragmentFeedBinding
 import ru.netology.nmedia.myapplication.dto.Post
+import ru.netology.nmedia.myapplication.viewmodel.DataModel
 import ru.netology.nmedia.myapplication.viewmodel.PostViewModel
 
 class FeedFragment : Fragment() {
-
+    private val dataModel : DataModel by activityViewModels()
     private val viewModel: PostViewModel by viewModels(
         ownerProducer = ::requireParentFragment
     )
@@ -36,6 +38,8 @@ class FeedFragment : Fragment() {
         val adapter = PostsAdapter(object : OnInteractionListener {
 
             override fun onPostClick(post: Post) {
+                val postClikedId = post.id
+                dataModel.postIdMessage.value = postClikedId
                 findNavController().navigate(R.id.action_feedFragment_to_PostFragment)
                 //TODO: необходимо доделать механизм нажатия на пост и проверить.
             }

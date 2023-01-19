@@ -6,23 +6,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
 import ru.netology.nmedia.myapplication.R
-import ru.netology.nmedia.myapplication.activity.Companion.Companion.longArg
-import ru.netology.nmedia.myapplication.adapter.OnInteractionListener
-import ru.netology.nmedia.myapplication.adapter.PostsAdapter
+import ru.netology.nmedia.myapplication.activity.Companion.Companion.textArg
 import ru.netology.nmedia.myapplication.databinding.FragmentPostBinding
 import ru.netology.nmedia.myapplication.dto.Post
+import ru.netology.nmedia.myapplication.viewmodel.DataModel
 import ru.netology.nmedia.myapplication.viewmodel.PostViewModel
 
 class PostFragment : Fragment() {
-
-    private val viewModel: PostViewModel by viewModels(
-        ownerProducer = ::requireParentFragment
-    )
-
+    private val dataModel: DataModel by activityViewModels()
+    lateinit var post: Post
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,46 +33,81 @@ class PostFragment : Fragment() {
             false
         )
 
-        val adapter = PostsAdapter(object : OnInteractionListener {
+        val viewModel: PostViewModel by viewModels(::requireParentFragment)
+        with(binding.scrollContent) {
+            viewModel.data.observe(viewLifecycleOwner) { posts ->
+                dataModel.postIdMessage.observe(activity as LifecycleOwner, {
+                    val postIdClicked = it
 
-            override fun onEdit(post: Post) {
-                viewModel.edit(post)
-                val text = post.content
-                val bundle = Bundle()
-                bundle.putString("editedText", text)
-                findNavController().navigate(R.id.action_feedFragment_to_editPostFragment, bundle)
+                    val post = posts.find { it.id == postIdClicked }
+                    if (post != null) {
+                        author.text = post.author
+                        published.text = post.published
+                        content.text = post.content
+                        like.text = changeNumber(post.likes)
+                        like.isChecked = post.likedByMe
+                        share.text = changeNumber(post.shares)
+
+                        if (post.videoUrl != null) {
+                            this.videoLayout.visibility = View.VISIBLE
+                            videoView.apply {
+                                setVideoURI(Uri.parse(post.videoUrl))
+                                requestFocus()
+                                start()
+                            }
+                        } else {
+                            videoLayout.visibility = View.GONE
+                        }
+
+                        like?.setOnClickListener {
+                            viewModel.likeById(post.id)
+                        }
+
+                        share?.setOnClickListener {
+                            val intent = Intent().apply {
+                                action = Intent.ACTION_SEND
+                                type = "text/plain"
+                                putExtra(Intent.EXTRA_TEXT, post.content)
+                            }
+
+                            val shareIntent =
+                                Intent.createChooser(intent, getString(R.string.chooser_share_post))
+                            startActivity(shareIntent)
+                        }
+
+
+                        videoLayout.setOnClickListener {
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(post.videoUrl))
+                            startActivity(intent)
+                        }
+
+                        menu?.setOnClickListener {
+                            PopupMenu(it.context, it).apply {
+                                inflate(R.menu.options_post)
+                                setOnMenuItemClickListener {
+                                    when (it.itemId) {
+                                        R.id.remove -> {
+                                            findNavController().navigateUp()
+                                            viewModel.deleteById(post.id)
+                                            true
+                                        }
+                                        R.id.edit -> {
+                                            viewModel.edit(post)
+                                            findNavController().navigate(R.id.action_postFragment_to_editPostFragment,
+                                                Bundle().apply {
+                                                    textArg = post.content
+                                                })
+                                            true
+                                        }
+                                        else -> false
+                                    }
+                                }
+                            }.show()
+                        }
+                    }
+                })
             }
-
-            override fun onLike(post: Post) {
-                viewModel.likeById(post.id)
-            }
-
-            override fun onDelete(post: Post) {
-                viewModel.deleteById(post.id)
-            }
-
-            override fun onShare(post: Post) {
-                val intent = Intent().apply {
-                    action = Intent.ACTION_SEND
-                    putExtra(Intent.EXTRA_TEXT, post.content)
-                    type = "text/plain"
-                }
-
-                val shareIntent =
-                    Intent.createChooser(intent, getString(R.string.chooser_share_post))
-                startActivity(shareIntent)
-            }
-
-            override fun onPlayVideo(post: Post) {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(post.videoUrl))
-                startActivity(intent)
-            }
-        })
-
-        viewModel.data.observe(viewLifecycleOwner) { posts ->
-            val post = posts.find { it.id == arguments?.longArg}
         }
-
         return binding.root
     }
 
