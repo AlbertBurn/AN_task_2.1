@@ -13,7 +13,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
 import ru.netology.nmedia.myapplication.R
-import ru.netology.nmedia.myapplication.activity.Companion.Companion.textArg
 import ru.netology.nmedia.myapplication.databinding.FragmentPostBinding
 import ru.netology.nmedia.myapplication.dto.Post
 import ru.netology.nmedia.myapplication.viewmodel.DataModel
@@ -93,10 +92,13 @@ class PostFragment : Fragment() {
                                         }
                                         R.id.edit -> {
                                             viewModel.edit(post)
-                                            findNavController().navigate(R.id.action_postFragment_to_editPostFragment,
-                                                Bundle().apply {
-                                                    textArg = post.content
-                                                })
+                                            val bundle = Bundle()
+                                            bundle.putString("editedText", post.content)
+                                            findNavController().navigate(R.id.action_postFragment_to_editPostFragment, bundle)
+//                                            findNavController().navigate(R.id.action_postFragment_to_editPostFragment,
+//                                                Bundle().apply {
+//                                                    textArg = post.content
+//                                                })
                                             true
                                         }
                                         else -> false
