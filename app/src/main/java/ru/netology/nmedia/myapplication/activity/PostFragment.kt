@@ -58,11 +58,11 @@ class PostFragment : Fragment() {
                             videoLayout.visibility = View.GONE
                         }
 
-                        like?.setOnClickListener {
+                        like.setOnClickListener {
                             viewModel.likeById(post.id)
                         }
 
-                        share?.setOnClickListener {
+                        share.setOnClickListener {
                             val intent = Intent().apply {
                                 action = Intent.ACTION_SEND
                                 type = "text/plain"
@@ -80,7 +80,7 @@ class PostFragment : Fragment() {
                             startActivity(intent)
                         }
 
-                        menu?.setOnClickListener {
+                        menu.setOnClickListener {
                             PopupMenu(it.context, it).apply {
                                 inflate(R.menu.options_post)
                                 setOnMenuItemClickListener {
@@ -95,10 +95,10 @@ class PostFragment : Fragment() {
                                             val bundle = Bundle()
                                             bundle.putString("editedText", post.content)
                                             findNavController().navigate(R.id.action_postFragment_to_editPostFragment, bundle)
-//                                            findNavController().navigate(R.id.action_postFragment_to_editPostFragment,
-//                                                Bundle().apply {
-//                                                    textArg = post.content
-//                                                })
+                    //                                            findNavController().navigate(R.id.action_postFragment_to_editPostFragment,
+                    //                                                Bundle().apply {
+                    //                                                    textArg = post.content
+                    //                                                })
                                             true
                                         }
                                         else -> false
