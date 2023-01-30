@@ -15,4 +15,14 @@
     <string name="chooser_share_post">Поделиться</string>
     <string name="add_post">Добавить пост</string>
     <string name="save">Сохранить</string>
+    <string name="hello_blank_fragment">Привет blank fragment</string>
+    <string name="google_play_unavailable">Google Api недоступно</string>
+    <string name="notification_user_liked">Пользователь %1$ лайкнул %2$ постов</string>
+    <string name="channel_remote_name">Уведомления сервера</string>
+    <string name="channel_remote_description">Уведомления с удаленного сервера</string>
+    <string name="channel_like_name">Уведомление лайка</string>
+    <string name="channel_newPost_name">Уведомление нового поста</string>
+    <string name="channel_like_description">Текст уведомления лайка</string>
+    <string name="channel_new_post_description">Текст уведомления нового поста</string>
+    <string name="notification_user_new_post">Пользователь %1$ создал пост</string>
 </resources>
